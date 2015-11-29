@@ -16,22 +16,32 @@ ship_at(X, Y) :-
   column_at(Y, Row, Cell),
   Cell = 1.
 
-fire_at(X, Y, State) :-
+hit:-
+	write('hit!'), nl.
+
+miss :-
+	write('miss!'), nl.
+	
+bombed(X, Y) :-
+	(ship_at(X, Y)) ->
+	 write('Fuck off, u already tried it'), nl.
+
+target(X, Y, State) :-
   (ship_at(X, Y) ->
-    write('a hit, a very palpable hit!'), nl ;
-    write('he shoots, he scores... not!'), nl).
+    hit, asserta(X,Y);
+    miss).
 
 prompt_number(Prompt, Number) :-
   write(Prompt),
   write(': '),
   read(Number).
 
-:- initialization(main).
-main :-
-  repeat,
-  prompt_number('enter row number', Row),
-  prompt_number('enter column number', Col),
-  fire_at(Row, Col, State),
-  (ship_at(Row, Col) ->
-    write('you won!'), nl, halt ;
-    write('keep trying!'), nl, fail).
+% :- initialization(main).
+% main :-
+%  repeat,
+%  prompt_number('enter column number', Col),
+%  prompt_number('enter row number', Row),
+%  target(Row, Col, State),
+%  (ship_at(Row, Col) ->
+%    write('you won!'), nl, halt ;
+%    write('keep trying!'), nl, fail).
