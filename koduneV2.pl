@@ -1,4 +1,3 @@
-% ['Users/p22slane/Desktop/battle/leav2.pl'].
 
 :- dynamic(bombed/2).
 :- dynamic(last_hit/2).
