@@ -16,23 +16,16 @@ ship_at(X, Y) :-
   column_at(Y, Row, Cell),
   Cell = 1.
 
-hit:-
-	write('hit!'), nl.
+hit(X,Y) :-
+	write('hit!').
 
-miss :-
-	write('miss!'), nl.
-	
-bombed(X, Y) :-
-	(ship_at(X, Y, _)) ->
-	 write('Fuck off, u already tried it'), nl.
+miss(X,Y) :-
+	write('miss!').
 
 target(X, Y, State) :-
   (ship_at(X, Y) ->
-    hit, tellkb(ship_at(X,Y,State)),write(State);
-    miss).
-
-tellkb(X):-
-	asserta(X).
+    hit(X,Y), nl;
+    miss(X,Y), nl.
 
 prompt_number(Prompt, Number) :-
   write(Prompt),
@@ -41,10 +34,10 @@ prompt_number(Prompt, Number) :-
 
 :- initialization(main).
 main :-
- repeat,
+  repeat,
   prompt_number('enter column number', Col),
   prompt_number('enter row number', Row),
   target(Row, Col, State),
   (ship_at(Row, Col) ->
-    write('you won!'), nl, fail ;
+    write('you won!'), nl, halt ;
     write('keep trying!'), nl, fail).
